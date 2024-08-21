@@ -1,0 +1,38 @@
+<mat-card>
+    <mat-card-title-group>
+      <mat-card-title style="margin-left: 20px;">
+        Candidats
+      </mat-card-title>
+      <div class="form">
+        <mat-form-field appearance="fill">
+            <input matInput type="text" [formControl]="searchCtrl">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-select [formControl]="searchTypeCtrl">
+                <mat-option *ngFor="let option of searchTypeOptions" [value]="option.value">{{ option.label }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    </mat-card-title-group>
+    <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+    <mat-nav-list *ngIf="candidates$ | async as candidates" style="margin-left: 30px;">
+        <div style="display:flex;flex-direction:row;" *ngFor="let candidate of candidates" mat-list-item>
+            <div matListAvatar>
+                <img  [src]="candidate.imageUrl" [alt]="candidate.lastName"  matListItemAvatar style="border-radius: 100%; height: 50px;">
+            </div>
+            <div>
+                <a  [routerLink]="candidate.id.toString()"  style="text-decoration: none;">
+                
+                    <div  >
+                      <h6  style="color: black;">{{ candidate.firstName }} {{ candidate.lastName }}</h6>
+                      <p mat-line style="color: black;">{{ candidate.job }} chez {{ candidate.company }}</p>
+                    </div>
+                    
+                  </a>
+            </div>
+            
+        </div>
+      
+    </mat-nav-list>
+  </mat-card>
